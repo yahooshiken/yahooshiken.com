@@ -10,7 +10,7 @@
     "dev:ts": "esbuild src/index.tsx --bundle '--define:process.env.NODE_ENV=\"development\"' --outfile=dist/bundle.js",
     "dev:copy": "cpx \"./public/**/*.*\" ./dist",
     "dev:watch": "sane \"yarn run dev:ts\" --glob='./src/**/*'",
-    "dev:reload": "cd dist && reload -b -p 8080",
+    "dev:reload": "cd dist && reload -b -p 8080 -f",
     "dev:clean": "rimraf ./dist",
     "build": "run-s build:clean build:copy build:ts",
     "build:copy": "cpx \"./public/**/*.*\" ./build",
