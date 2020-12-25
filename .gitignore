@@ -3,3 +3,6 @@ libraries/
 modes/
 templates/
 tools/
+
+node_modules/
+dist/
