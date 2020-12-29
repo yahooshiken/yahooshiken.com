@@ -13,7 +13,9 @@ const Header: FC<Props> = ({ handleOpen }) => {
       <IconButton rounded size="medium" onClick={handleOpen}>
         <Menu />
       </IconButton>
-      <LogoWrapper>Logo here</LogoWrapper>
+      <LogoWrapper>
+        <LogoImage src="./assets/images/logo.png" alt="yahooshiken.com" />
+      </LogoWrapper>
     </HeaderWrapper>
   );
 };
@@ -29,6 +31,12 @@ const HeaderWrapper = styled.div`
 
 const LogoWrapper = styled.div`
   padding: 0 12px;
+  width: auto;
+  height: 100%;
+`;
+
+const LogoImage = styled.img`
+  height: 100%;
 `;
 
 export default Header;
