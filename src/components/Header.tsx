@@ -1,4 +1,6 @@
 import React, { FC } from "react";
+import { IconButton } from "ui-neumorphism";
+import { Menu } from "react-feather";
 import styled from "styled-components";
 
 type Props = {
@@ -8,12 +10,25 @@ type Props = {
 const Header: FC<Props> = ({ handleOpen }) => {
   return (
     <HeaderWrapper>
-      <button onClick={handleOpen}>Open sidebar</button>
-      Header
+      <IconButton rounded size="medium" onClick={handleOpen}>
+        <Menu />
+      </IconButton>
+      <LogoWrapper>Logo here</LogoWrapper>
     </HeaderWrapper>
   );
 };
 
-const HeaderWrapper = styled.div``;
+const HeaderWrapper = styled.div`
+  height: 60px;
+  margin-bottom: 16px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+`;
+
+const LogoWrapper = styled.div`
+  padding: 0 12px;
+`;
 
 export default Header;

@@ -1,32 +1,35 @@
 import React, { FC, useState } from "react";
 import ReactSidebar from "react-sidebar";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link, useLocation } from "react-router-dom";
+import { ListItem } from "ui-neumorphism";
 
 import Header from "./Header";
 
-const ButtonWrapper = styled.div``;
-
 const Sidebar: FC = ({ children }) => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  const listItems = [
+    { path: "/", title: "Home" },
+    { path: "/1", title: "to 1" },
+    { path: "/2", title: "to 2" },
+    { path: "/3", title: "to 3" },
+  ];
 
   return (
     <ReactSidebar
       sidebar={
-        <ul>
-          <li>
-            <Link to="/">to Home</Link>
-          </li>
-          <li>
-            <Link to="/1">to 1</Link>
-          </li>
-          <li>
-            <Link to="/2">to 2</Link>
-          </li>
-          <li>
-            <Link to="/3">to 3</Link>
-          </li>
-        </ul>
+        <SidebarWrapper>
+          {listItems.map((item) => (
+            <Link key={item.path} to={item.path}>
+              <ListItem
+                active={location.pathname === item.path}
+                title={item.title}
+              />
+            </Link>
+          ))}
+        </SidebarWrapper>
       }
       open={open}
       onSetOpen={setOpen}
@@ -39,5 +42,11 @@ const Sidebar: FC = ({ children }) => {
     </ReactSidebar>
   );
 };
+
+const ButtonWrapper = styled.div``;
+
+const SidebarWrapper = styled.div`
+  width: 240px;
+`;
 
 export default Sidebar;
