@@ -6,6 +6,7 @@ import P5Canvas from "./components/P5Canvas";
 import Sidebar from "./components/Sidebar";
 import Circle from "./sketches/Circle";
 import WaveClock from "./sketches/WaveClock";
+import NoiseGrid2D from "./sketches/NoiseGrid2D";
 
 const Routes: FC = () => (
   <Router>
@@ -16,6 +17,9 @@ const Routes: FC = () => (
         </Route>
         <Route path="/2">
           <P5Canvas sketch={WaveClock} />
+        </Route>
+        <Route path="/3">
+          <P5Canvas sketch={NoiseGrid2D} />
         </Route>
         <Route path="/">Home</Route>
       </Switch>

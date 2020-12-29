@@ -23,6 +23,9 @@ const Sidebar: FC = ({ children }) => {
           <li>
             <Link to="/2">to 2</Link>
           </li>
+          <li>
+            <Link to="/3">to 3</Link>
+          </li>
         </ul>
       }
       open={open}

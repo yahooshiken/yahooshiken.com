@@ -3,7 +3,7 @@ import p5 from "p5";
 const WaveClock = (p: p5) => {
   let [angleNoise, radiusNoise, xNoise, yNoise] = new Array(4).fill(
     p.random(15)
-  );
+  ) as number[];
   let angle = -p.PI / 2;
   let strokeCol = 254;
   let strokeChange = -1;
