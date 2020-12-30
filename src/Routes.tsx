@@ -8,23 +8,26 @@ import Circle from "./sketches/Circle";
 import WaveClock from "./sketches/WaveClock";
 import NoiseGrid2D from "./sketches/NoiseGrid2D";
 
-const Routes: FC = () => (
-  <Router>
-    <Sidebar>
-      <Switch>
-        <Route path="/1">
-          <P5Canvas sketch={Circle} />
-        </Route>
-        <Route path="/2">
-          <P5Canvas sketch={WaveClock} />
-        </Route>
-        <Route path="/3">
-          <P5Canvas sketch={NoiseGrid2D} />
-        </Route>
-        <Route path="/">Home</Route>
-      </Switch>
-    </Sidebar>
-  </Router>
-);
+const Routes: FC = () => {
+  const routes = [
+    { path: "/1", children: <P5Canvas sketch={Circle} /> },
+    { path: "/2", children: <P5Canvas sketch={WaveClock} /> },
+    { path: "/3", children: <P5Canvas sketch={NoiseGrid2D} /> },
+    { path: "/", children: "Home" },
+  ];
 
+  return (
+    <Router>
+      <Sidebar>
+        <Switch>
+          {routes.map((route) => (
+            <Route key={route.path} path={route.path}>
+              {route.children}
+            </Route>
+          ))}
+        </Switch>
+      </Sidebar>
+    </Router>
+  );
+};
 export default Routes;
