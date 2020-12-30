@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { IconButton } from "ui-neumorphism";
 import { Menu } from "react-feather";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 type Props = {
@@ -14,7 +15,9 @@ const Header: FC<Props> = ({ handleOpen }) => {
         <Menu />
       </IconButton>
       <LogoWrapper>
-        <LogoImage src="./assets/images/logo.png" alt="yahooshiken.com" />
+        <Link to="/">
+          <LogoImage src="./assets/images/logo.png" alt="yahooshiken.com" />
+        </Link>
       </LogoWrapper>
     </HeaderWrapper>
   );
@@ -22,7 +25,7 @@ const Header: FC<Props> = ({ handleOpen }) => {
 
 const HeaderWrapper = styled.div`
   height: 60px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   padding: 0 16px;
   display: flex;
   justify-content: start;
