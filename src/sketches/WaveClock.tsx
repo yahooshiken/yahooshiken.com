@@ -1,11 +1,11 @@
 import p5 from "p5";
 
-const WaveClock = (p: p5) => {
+const WaveClock = (p: p5): void => {
   let [angleNoise, radiusNoise, xNoise, yNoise] = new Array(4).fill(
     p.random(15)
   ) as number[];
   let angle = -p.PI / 2;
-  let strokeCol = 254;
+  let strokeCol = 128;
   let strokeChange = -1;
 
   p.setup = () => {
@@ -20,17 +20,17 @@ const WaveClock = (p: p5) => {
   };
   p.draw = () => {
     radiusNoise += 0.2;
-    const radius = p.noise(radiusNoise) * 2400 + 2;
+    const radius = p.noise(radiusNoise) * 2400;
 
     angleNoise += 0.001;
-    angle += p.noise(angleNoise * 6) - 3;
+    angle += p.noise(angleNoise * 3) - 2;
     if (angle > 360) angle -= 360;
     if (angle < 0) angle += 360;
 
     xNoise += 0.01;
     yNoise += 0.01;
-    const centerX = p.width / 2 + p.noise(xNoise) * 100 - 50;
-    const centerY = p.height / 2 + p.noise(yNoise) * 100 - 50;
+    const centerX = p.noise(xNoise) * p.width;
+    const centerY = p.noise(yNoise) * p.height;
 
     const radian = p.radians(angle);
     const oppositeRadian = radian + p.PI;
@@ -40,7 +40,7 @@ const WaveClock = (p: p5) => {
     const y2 = centerY + radius * p.sin(oppositeRadian);
 
     strokeCol += strokeChange;
-    if (strokeCol > 254) strokeChange = -1;
+    if (strokeCol > 127) strokeChange = -1;
     if (strokeCol < 0) strokeChange = 1;
     p.stroke(strokeCol, 60);
     p.strokeWeight(1);

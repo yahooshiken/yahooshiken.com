@@ -1,6 +1,6 @@
 import p5 from "p5";
 
-const Circle = (p: p5) => {
+const Circle = (p: p5): void => {
   p.setup = () => {
     p.createCanvas(p.windowWidth, p.windowHeight);
   };
