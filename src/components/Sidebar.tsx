@@ -17,6 +17,7 @@ const Sidebar: FC = ({ children }) => {
     { path: "/3", title: "to 3" },
     { path: "/4", title: "to 4" },
     { path: "/5", title: "to 5" },
+    { path: "/6", title: "to 6" },
   ];
 
   return (

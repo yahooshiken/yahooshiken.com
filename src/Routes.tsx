@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import P5Canvas from "./components/P5Canvas";
 
+import Home from "./components/Home";
 import Sidebar from "./components/Sidebar";
 import Circle from "./sketches/Circle";
 import WaveClock from "./sketches/WaveClock";
 import NoiseGrid2D from "./sketches/NoiseGrid2D";
 import NoiseGrid2DRect from "./sketches/NoiseGrid2DRect";
 import NoiseGrid2DRotate from "./sketches/NoiseGrid2DRotate";
+import Circles from "./sketches/Circles";
 
 const Routes: FC = () => {
   const routes = [
@@ -17,7 +19,8 @@ const Routes: FC = () => {
     { path: "/3", children: <P5Canvas sketch={NoiseGrid2D} /> },
     { path: "/4", children: <P5Canvas sketch={NoiseGrid2DRect} /> },
     { path: "/5", children: <P5Canvas sketch={NoiseGrid2DRotate} /> },
-    { path: "/", children: "Home" },
+    { path: "/6", children: <P5Canvas sketch={Circles} /> },
+    { path: "/", children: <Home /> },
   ];
 
   return (
