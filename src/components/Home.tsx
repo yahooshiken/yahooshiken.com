@@ -1,12 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import Lottie, { Options } from "react-lottie";
-import animationData from "../lotties/top.json";
 
 const Home: FC = () => {
-  const lottieOptions: Options = {
-    animationData,
-  };
+  const [animationData, setAnimationData] = useState("");
+  const lottieOptions: Options = { animationData };
+
+  useEffect(() => {
+    const lazyLoadJson = async () => {
+      const data = await import("../lotties/top.json");
+      setAnimationData(data);
+    };
+
+    lazyLoadJson();
+  }, []);
 
   return (
     <HomeWrapper>
