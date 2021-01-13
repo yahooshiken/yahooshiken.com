@@ -36,7 +36,6 @@ const TimelinePage: FC = () => {
       const result = await httpClient.get<GithubActivity[]>(
         "/v1/activities/github"
       );
-      console.info(result.data);
       setActivities(result.data);
     };
 

@@ -11,6 +11,7 @@ import NoiseGrid2D from "./sketches/NoiseGrid2D";
 import NoiseGrid2DRect from "./sketches/NoiseGrid2DRect";
 import NoiseGrid2DRotate from "./sketches/NoiseGrid2DRotate";
 import Circles from "./sketches/Circles";
+import AboutPage from "./pages/AboutPage";
 import TimelinePage from "./pages/TimelinePage";
 
 const Routes: FC = () => {
@@ -21,6 +22,7 @@ const Routes: FC = () => {
     { path: "/4", children: <P5Canvas sketch={NoiseGrid2DRect} /> },
     { path: "/5", children: <P5Canvas sketch={NoiseGrid2DRotate} /> },
     { path: "/6", children: <P5Canvas sketch={Circles} /> },
+    { path: "/about", children: <AboutPage /> },
     { path: "/timeline", children: <TimelinePage /> },
     { path: "/", children: <Home /> },
   ];

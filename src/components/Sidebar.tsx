@@ -12,6 +12,7 @@ const Sidebar: FC = ({ children }) => {
 
   const listItems = [
     { path: "/", title: "Home" },
+    { path: "/about", title: "About" },
     { path: "/timeline", title: "Timeline" },
     { path: "/1", title: "to 1" },
     { path: "/2", title: "to 2" },
