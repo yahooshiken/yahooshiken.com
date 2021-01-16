@@ -16,12 +16,15 @@ import TimelinePage from "./pages/TimelinePage";
 
 const Routes: FC = () => {
   const routes = [
-    { path: "/1", children: <P5Canvas sketch={Circle} /> },
-    { path: "/2", children: <P5Canvas sketch={WaveClock} /> },
-    { path: "/3", children: <P5Canvas sketch={NoiseGrid2D} /> },
-    { path: "/4", children: <P5Canvas sketch={NoiseGrid2DRect} /> },
-    { path: "/5", children: <P5Canvas sketch={NoiseGrid2DRotate} /> },
-    { path: "/6", children: <P5Canvas sketch={Circles} /> },
+    { path: "/p5_gallery/1", children: <P5Canvas sketch={Circle} /> },
+    { path: "/p5_gallery/2", children: <P5Canvas sketch={WaveClock} /> },
+    { path: "/p5_gallery/3", children: <P5Canvas sketch={NoiseGrid2D} /> },
+    { path: "/p5_gallery/4", children: <P5Canvas sketch={NoiseGrid2DRect} /> },
+    {
+      path: "/p5_gallery/5",
+      children: <P5Canvas sketch={NoiseGrid2DRotate} />,
+    },
+    { path: "/p5_gallery/6", children: <P5Canvas sketch={Circles} /> },
     { path: "/about", children: <AboutPage /> },
     { path: "/timeline", children: <TimelinePage /> },
     { path: "/", children: <Home /> },
