@@ -33,6 +33,8 @@ const Home: FC = () => {
 
 const HomeWrapper = styled.div`
   display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
 `;
 
 const MessageWrapper = styled.div`
