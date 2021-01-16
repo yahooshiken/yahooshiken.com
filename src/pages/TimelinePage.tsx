@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardMedia,
   Checkbox,
+  Chip,
   H6,
   ProgressCircular,
   Subtitle1,
@@ -35,6 +36,12 @@ const Aside = styled.aside`
 const CardWrapper = styled.div`
   max-width: 560px;
   margin-bottom: 24px;
+  text-decoration: none;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.6, 1);
+  &:hover {
+    box-shadow: rgb(190, 200, 228) 9px 9px 18px 0px,
+      rgb(255, 255, 255) -9px -9px 18px 0px;
+  }
 `;
 
 const TimelineWrapper = styled.div`
@@ -62,12 +69,17 @@ const LottieWrapper = styled.div`
   text-align: center;
 `;
 
+const ChipWrapper = styled.div`
+  display: inline-block;
+  margin: 4px 12px 4px 0;
+`;
+
 const SERVICE_NAME = {
   Github: "Github",
   Qiita: "Qiita",
   Note: "Note",
   Twitter: "Twitter",
-};
+} as const;
 
 type ServiceName = keyof typeof SERVICE_NAME;
 
@@ -123,6 +135,13 @@ const Article = (article: Article) => (
         <CardMedia dark src={article.image_url} />
         <CardContent>
           <Body>{article.body}</Body>
+        </CardContent>
+        <CardContent>
+          {article.tags.map((tag) => (
+            <ChipWrapper key={tag}>
+              <Chip type="info">{tag}</Chip>
+            </ChipWrapper>
+          ))}
         </CardContent>
       </Card>
     </CardWrapper>
@@ -242,7 +261,7 @@ const Timeline: FC<{ loading: boolean; events: Article[] }> = ({
     );
   }
 
-  return events.map(Article);
+  return <>{events.map(Article)}</>;
 };
 
 export default TimelinePage;
