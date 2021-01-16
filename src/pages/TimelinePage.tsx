@@ -1,17 +1,19 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
+import Lottie, { Options } from "react-lottie";
 import {
   Avatar,
+  Body1,
+  Body2,
   Card,
-  H5,
-  H6,
-  Subtitle1,
   CardContent,
   CardHeader,
   CardMedia,
-  Body2,
   Checkbox,
+  H6,
+  ProgressCircular,
+  Subtitle1,
 } from "ui-neumorphism";
 
 import httpClient from "../httpClient";
@@ -31,6 +33,7 @@ const Aside = styled.aside`
 `;
 
 const CardWrapper = styled.div`
+  max-width: 560px;
   margin-bottom: 24px;
 `;
 
@@ -39,11 +42,24 @@ const TimelineWrapper = styled.div`
   padding: 0 1rem 1rem;
 `;
 
+const ProgressWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+`;
+
 const Body = styled(Body2)`
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+`;
+
+const LottieWrapper = styled.div`
+  min-width: 60%;
+  margin: 0 auto;
+  text-align: center;
 `;
 
 const SERVICE_NAME = {
@@ -91,7 +107,11 @@ const Article = (article: Article) => (
     <CardWrapper>
       <Card bordered>
         <CardHeader
-          title={<H6>{article.title}</H6>}
+          title={
+            <H6>
+              <b>{article.title}</b>
+            </H6>
+          }
           subtitle={<Subtitle1>{article.created_at}</Subtitle1>}
           avatar={
             <Avatar
@@ -117,23 +137,28 @@ const TimelinePage: FC = () => {
     Twitter: true,
   });
 
+  const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState<Article[]>([]);
   const [qiitaArticles, setQiitaArticles] = useState<Article[]>([]);
   const [noteArticles, setNoteArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     const fetchQiitaArticles = async () => {
+      setLoading(true);
       const result = await httpClient.get<ArticleResponse>(
         "/v1/activities/qiita"
       );
       setQiitaArticles(result.data.articles);
+      setLoading(false);
     };
 
     const fetchNoteArticles = async () => {
+      setLoading(true);
       const result = await httpClient.get<ArticleResponse>(
         "/v1/activities/note"
       );
       setNoteArticles(result.data.articles);
+      setLoading(false);
     };
 
     fetchQiitaArticles().catch((e) => {
@@ -174,10 +199,50 @@ const TimelinePage: FC = () => {
           color="var(--success)"
           onChange={() => handleShow(show, "Qiita")}
         />
+        <Checkbox label="はてなブログ" disabled />
       </Aside>
-      <TimelineWrapper>{events.map(Article)}</TimelineWrapper>
+      <TimelineWrapper>
+        <Timeline loading={loading} events={events} />
+      </TimelineWrapper>
     </PageWrapper>
   );
+};
+
+const Timeline: FC<{ loading: boolean; events: Article[] }> = ({
+  loading,
+  events,
+}) => {
+  const [animationData, setAnimationData] = useState(undefined);
+  const lottieOptions: Options = { animationData };
+
+  useEffect(() => {
+    const lazyLoadJson = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const data = await import("../lotties/koala.json");
+      setAnimationData(data);
+    };
+
+    lazyLoadJson().catch((e) => console.error(e));
+  }, []);
+
+  if (loading) {
+    return (
+      <ProgressWrapper>
+        <ProgressCircular indeterminate color="var(--primary)" />
+      </ProgressWrapper>
+    );
+  }
+
+  if (!events.length) {
+    return (
+      <LottieWrapper>
+        <Lottie options={lottieOptions} />
+        <Body1>Thank you for finding me!</Body1>
+      </LottieWrapper>
+    );
+  }
+
+  return events.map(Article);
 };
 
 export default TimelinePage;
