@@ -3,16 +3,17 @@ import styled from "styled-components";
 import Lottie, { Options } from "react-lottie";
 
 const Home: FC = () => {
-  const [animationData, setAnimationData] = useState("");
+  const [animationData, setAnimationData] = useState(undefined);
   const lottieOptions: Options = { animationData };
 
   useEffect(() => {
     const lazyLoadJson = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const data = await import("../lotties/top.json");
       setAnimationData(data);
     };
 
-    lazyLoadJson();
+    lazyLoadJson().catch((e) => console.error(e));
   }, []);
 
   return (
