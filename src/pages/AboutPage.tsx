@@ -34,7 +34,7 @@ const profileGreeting: { [lang in Lang]: string } = {
   Ja: "ひとつよしなに 👋",
   De: "Prost! 🍻",
   Ru: "Хорошего дня! 🎉",
-};
+} as const;
 
 const profileBody: { [lang in Lang]: string } = {
   En:
@@ -45,7 +45,7 @@ const profileBody: { [lang in Lang]: string } = {
     "Ich bin kein großer Fan von Bier. Das tut mir leid, Deutsche. Wenn Sie ein gutes Bier kennen, lassen Sie es mich bitte wissen. Ich werde Ihnen sagen, welchen Sake ich stattdessen empfehle. \n\n・作 / Zaku (Shimizu Sake-Brauerei)\n・紀土 / Kid (Heiwa Sake-Brauerei)\n・天明 / Tenmei (Akebono Sake-Brauerei)\n・ひめぜん / Himezen (Ichinokura Sake-Brauerei)\n・伊根満開 / Ine Mankai (Mukai Sake-Brauerei)\n・くどき上手 / Kudoki Jozu (Kamenoi Sake-Brauerei)\n\nWenn Sie die Gelegenheit haben, Japan zu besuchen, probieren Sie es bitte.",
   Ru:
     "Я не понимаю русского языка, но больше всего я хочу посетить Владивосток, Россия. Владивосток очень близок к Японии, и мне бы хотелось познакомиться с русским Ваней.\n\nВ Японии много саун и жарких источников. Если вы приедете в Японию, пожалуйста, постарайтесь посетить их.",
-};
+} as const;
 
 const AboutPage: FC = () => {
   const [blur, setBlur] = useState(0);
@@ -202,12 +202,21 @@ const PageWrapper = styled.div`
   display: flex;
   max-width: 800px;
   margin: 0 auto;
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
-const PhotoWrapper = styled.div``;
+const PhotoWrapper = styled.div`
+  @media (max-width: 767px) {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+`;
 
 const PhotoOfMe = styled.img<FilterOption>`
   max-width: 400px;
+  height: auto;
   filter: blur(${({ blur }) => blur}px)
     brightness(${({ brightness }) => brightness}%)
     saturate(${({ saturate }) => saturate}%) sepia(${({ sepia }) => sepia}%)
@@ -215,6 +224,9 @@ const PhotoOfMe = styled.img<FilterOption>`
     grayscale(${({ grayscale }) => grayscale}%)
     contrast(${({ contrast }) => contrast}%) invert(${({ invert }) => invert}%)
     opacity(${({ opacity }) => opacity}%) drop-shadow(16px 16px 20px #666);
+  @media (max-width: 767px) {
+    max-width: 320px;
+  }
 `;
 
 const AttributesWrapper = styled.div`
@@ -228,7 +240,9 @@ const ButtonWrapper = styled.div`
   justify-content: space-around;
 `;
 
-const SliderWrapper = styled.div``;
+const SliderWrapper = styled.div`
+  text-align: left;
+`;
 
 const Slider = styled.input`
   width: calc(100% - 92px);
@@ -242,6 +256,9 @@ const Label = styled.label`
 const DescriptionWrapper = styled.div`
   padding: 0 0 20px 48px;
   white-space: pre-wrap;
+  @media (max-width: 767px) {
+    padding: 0 20px 40px;
+  }
 `;
 
 export default AboutPage;

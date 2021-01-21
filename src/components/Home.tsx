@@ -35,6 +35,10 @@ const HomeWrapper = styled.div`
   display: flex;
   max-width: 1280px;
   margin: 0 auto;
+  @media (max-width: 767px) {
+    flex-direction: column;
+    padding: 0 16px;
+  }
 `;
 
 const MessageWrapper = styled.div`
@@ -43,19 +47,33 @@ const MessageWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   padding-left: 40px;
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: 48px 0 32px;
+  }
 `;
 
 const MainMessage = styled.h1`
   font-size: 4rem;
+  margin-bottom: 12px;
+  @media (max-width: 767px) {
+    font-size: 3rem;
+  }
 `;
 
 const SubMessage = styled.h2`
   font-size: 1.8rem;
   font-weight: normal;
+  @media (max-width: 767px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const LottieWrapper = styled.div`
   width: 50%;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 export default Home;
