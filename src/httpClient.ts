@@ -5,7 +5,7 @@ const config: AxiosRequestConfig = {
     process.env.NODE_ENV === "production"
       ? "https://api.yahooshiken.com"
       : "http://localhost:8080",
-  timeout: 2000,
+  timeout: 5000,
   headers: {
     "Content-type": "application/json",
   },
