@@ -17,11 +17,11 @@ const Circles = (p: p5): void => {
       this.xDiff = p.random(10) - 5;
       this.yDiff = p.random(10) - 5;
       this.radius = p.random(100);
+      this.alpha = p.random(255);
       this.lineColor = p.color(p.random(255), p.random(255), p.random(255));
       this.lineColor.setAlpha(this.alpha);
       this.fillColor = p.color(p.random(255), p.random(255), p.random(255));
       this.fillColor.setAlpha(150);
-      this.alpha = p.random(255);
     }
 
     draw() {

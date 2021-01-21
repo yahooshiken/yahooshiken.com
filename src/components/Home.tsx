@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Lottie, { Options } from "react-lottie";
 
 const Home: FC = () => {
-  const [animationData, setAnimationData] = useState(undefined);
+  const [animationData, setAnimationData] = useState<any>(undefined);
   const lottieOptions: Options = { animationData };
 
   useEffect(() => {

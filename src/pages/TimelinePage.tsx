@@ -244,7 +244,7 @@ const Timeline: FC<{ loading: boolean; events: Article[] }> = ({
   loading,
   events,
 }) => {
-  const [animationData, setAnimationData] = useState(undefined);
+  const [animationData, setAnimationData] = useState<any>(undefined);
   const lottieOptions: Options = { animationData };
 
   useEffect(() => {
