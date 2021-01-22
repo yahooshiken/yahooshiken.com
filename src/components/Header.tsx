@@ -17,7 +17,7 @@ const Header: FC<Props> = ({ handleOpen }) => {
       <LogoWrapper>
         <Link to="/">
           <LogoImage
-            src="./assets/images/logo.png"
+            src="/assets/images/logo.png"
             alt="yahooshiken.com"
             width={160}
             height={60}

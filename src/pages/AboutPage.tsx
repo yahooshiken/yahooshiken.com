@@ -120,7 +120,7 @@ const AboutPage: FC = () => {
         <PhotoOfMe
           width={400}
           height={400}
-          src="./assets/images/me.jpg"
+          src="/assets/images/me.jpg"
           blur={blur}
           brightness={brightness}
           saturate={saturate}

@@ -28,7 +28,6 @@ const Circles = (p: p5): void => {
       p.noStroke();
       p.fill(this.fillColor);
       p.ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
-      p.stroke(this.lineColor);
       p.noFill();
       p.ellipse(this.x, this.y, 10, 10);
     }
