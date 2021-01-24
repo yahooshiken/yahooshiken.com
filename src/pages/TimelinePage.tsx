@@ -82,6 +82,7 @@ const SERVICE_NAME = {
   Qiita: "Qiita",
   Note: "Note",
   Twitter: "Twitter",
+  Hatena: "Hatena",
 } as const;
 
 type ServiceName = keyof typeof SERVICE_NAME;
@@ -157,12 +158,14 @@ const TimelinePage: FC = () => {
     Qiita: true,
     Note: true,
     Twitter: true,
+    Hatena: true,
   });
 
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState<Article[]>([]);
   const [qiitaArticles, setQiitaArticles] = useState<Article[]>([]);
   const [noteArticles, setNoteArticles] = useState<Article[]>([]);
+  const [hatenaArticles, setHatenaArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     const fetchQiitaArticles = async () => {
@@ -193,10 +196,27 @@ const TimelinePage: FC = () => {
       }
     };
 
+    const fetchHatenaArticles = async () => {
+      setLoading(true);
+      try {
+        const result = await httpClient.get<ArticleResponse>(
+          "/v1/activities/hatena"
+        );
+        setHatenaArticles(result.data.articles);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchQiitaArticles().catch((e) => {
       console.error(e);
     });
     fetchNoteArticles().catch((e) => {
+      console.error(e);
+    });
+    fetchHatenaArticles().catch((e) => {
       console.error(e);
     });
   }, []);
@@ -205,12 +225,13 @@ const TimelinePage: FC = () => {
     const items = [
       ...(show.Qiita ? qiitaArticles : []),
       ...(show.Note ? noteArticles : []),
+      ...(show.Hatena ? hatenaArticles : []),
     ];
     items.sort((a, b) =>
       moment(a.created_at).isBefore(b.created_at) ? 1 : -1
     );
     setEvents(items);
-  }, [show, qiitaArticles, noteArticles]);
+  }, [show, qiitaArticles, noteArticles, hatenaArticles]);
 
   const handleShow = (show: ShowState, serviceName: ServiceName) => {
     setShow({ ...show, [serviceName]: !show[serviceName] });
@@ -231,7 +252,12 @@ const TimelinePage: FC = () => {
           color="var(--success)"
           onChange={() => handleShow(show, "Qiita")}
         />
-        <Checkbox label="はてなブログ" disabled />
+        <Checkbox
+          label="はてなブログ"
+          checked={show.Hatena}
+          color="var(--success)"
+          onChange={() => handleShow(show, "Hatena")}
+        />
       </Aside>
       <TimelineWrapper>
         <Timeline loading={loading} events={events} />
