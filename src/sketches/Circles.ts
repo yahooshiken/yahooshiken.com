@@ -56,6 +56,7 @@ const Circles = (p: p5): void => {
   p.setup = () => {
     p.createCanvas(p.windowWidth, p.windowHeight);
     p.smooth();
+    drawCircles();
   };
   p.mouseClicked = () => {
     drawCircles();

@@ -79,12 +79,9 @@ const Sidebar: FC = ({ children }) => {
       path: "/p5_gallery",
       title: "p5.js Gallery",
       childRoutes: [
-        { path: "/p5_gallery/1", title: "to 1" },
-        { path: "/p5_gallery/2", title: "to 2" },
-        { path: "/p5_gallery/3", title: "to 3" },
-        { path: "/p5_gallery/4", title: "to 4" },
-        { path: "/p5_gallery/5", title: "to 5" },
-        { path: "/p5_gallery/6", title: "to 6" },
+        { path: "/p5_gallery/balloon", title: "Balloon" },
+        { path: "/p5_gallery/wave_clock", title: "Wave Clock" },
+        { path: "/p5_gallery/round", title: "Round and Round" },
       ],
     },
   ];
