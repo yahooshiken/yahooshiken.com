@@ -84,6 +84,11 @@ const Sidebar: FC = ({ children }) => {
         { path: "/p5_gallery/round", title: "Round and Round" },
       ],
     },
+    {
+      path: "/three_gallery",
+      title: "Three.js Gallery",
+      childRoutes: [{ path: "/three_gallery/box", title: "Box" }],
+    },
   ];
 
   return (

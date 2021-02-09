@@ -30,7 +30,9 @@
     "react-p5-wrapper": "^2.3.0",
     "react-router-dom": "^5.2.0",
     "react-sidebar": "^3.0.2",
+    "react-three-fiber": "^5.3.18",
     "styled-components": "^5.2.1",
+    "three": "^0.125.2",
     "ui-neumorphism": "^1.1.0"
   },
   "devDependencies": {
