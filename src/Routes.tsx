@@ -10,7 +10,7 @@ import WaveClock from "./sketches/WaveClock";
 import Circles from "./sketches/Circles";
 import AboutPage from "./pages/AboutPage";
 import TimelinePage from "./pages/TimelinePage";
-import ThreeCanvas from "./components/ThreeCanvas";
+import BoxCanvas from "./components/BoxCanvas";
 
 const Routes: FC = () => {
   // prettier-ignore
@@ -19,7 +19,7 @@ const Routes: FC = () => {
     { path: "/p5_gallery/wave_clock", children: <P5Canvas sketch={WaveClock} title="Wave clock" description="時計は今から6000年ほど前にエジプトで誕生したらしいです。人類最古の時計は日時計で、その後水時計、砂時計と自然の力を利用した様々な種類の時計が発明されていきました。現代の主流となるクォーツ時計が発明されたのは実に1927年のことであります。これから先、どんな時計が発明されていくのでしょうか。ちなみに私は人との待ち合わせ時間を守るのが苦手なクソ人間です。" /> },
     { path: "/p5_gallery/balloon", children: <P5Canvas sketch={Circles} title="Balloon" description="クリックすると円が増えます。子供の頃に遊んだマクドナルドのカラーボールプールみたいですね。そういえばアスレチックが併設しているマクドナルド、昔はたくさんあったのに随分見なくなったように感じますね。ちなみに私は、ダブルチーズバーガーが好きです。" /> },
     { path: "/p5_gallery/balloon", children: <P5Canvas sketch={Circles} title="Balloon" description="クリックすると円が増えます。子供の頃に遊んだマクドナルドのカラーボールプールみたいですね。そういえばアスレチックが併設しているマクドナルド、昔はたくさんあったのに随分見なくなったように感じますね。ちなみに私は、ダブルチーズバーガーが好きです。" /> },
-    { path: "/three_gallery/box", children: <ThreeCanvas /> },
+    { path: "/three_gallery/box", children: <BoxCanvas /> },
     { path: "/about", children: <AboutPage /> },
     { path: "/timeline", children: <TimelinePage /> },
     { path: "/", children: <Home /> },

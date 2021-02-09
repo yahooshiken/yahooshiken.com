@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState } from "react";
-import { Canvas, useFrame, MeshProps } from "react-three-fiber";
+import { useFrame, MeshProps } from "react-three-fiber";
 import { Mesh } from "three";
 
 const Box: FC<MeshProps> = (props) => {
@@ -15,7 +15,7 @@ const Box: FC<MeshProps> = (props) => {
     <mesh
       {...props}
       ref={mesh}
-      scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
+      scale={active ? [5, 5, 5] : [3, 3, 3]}
       onClick={() => setActive(!active)}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
@@ -26,15 +26,4 @@ const Box: FC<MeshProps> = (props) => {
   );
 };
 
-const ThreeCanvas: FC = () => {
-  return (
-    <Canvas>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
-    </Canvas>
-  );
-};
-
-export default ThreeCanvas;
+export default Box;
