@@ -92,7 +92,10 @@ const Sidebar: FC = ({ children }) => {
     {
       path: "/ar_showcase",
       title: "AR Showcase",
-      childRoutes: [{ path: "/ar_showcase/cesium_man", title: "Cesium Man" }],
+      childRoutes: [
+        { path: "/ar_showcase/cesium_man", title: "Cesium Man" },
+        { path: "/ar_showcase/fox", title: "Fox" },
+      ],
     },
   ];
 

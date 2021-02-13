@@ -12,6 +12,7 @@ import AboutPage from "./pages/AboutPage";
 import TimelinePage from "./pages/TimelinePage";
 import BoxCanvas from "./components/BoxCanvas";
 import ArCesiumMan from "./components/ArCesiumMan";
+import ArFox from "./components/ArFox";
 
 const Routes: FC = () => {
   // prettier-ignore
@@ -21,6 +22,7 @@ const Routes: FC = () => {
     { path: "/p5_gallery/balloon", children: <P5Canvas sketch={Circles} title="Balloon" description="クリックすると円が増えます。子供の頃に遊んだマクドナルドのカラーボールプールみたいですね。そういえばアスレチックが併設しているマクドナルド、昔はたくさんあったのに随分見なくなったように感じますね。ちなみに私は、ダブルチーズバーガーが好きです。" /> },
     { path: "/three_gallery/box", children: <BoxCanvas /> },
     { path: "/ar_showcase/cesium_man", children: <ArCesiumMan /> },
+    { path: "/ar_showcase/fox", children: <ArFox /> },
     { path: "/about", children: <AboutPage /> },
     { path: "/timeline", children: <TimelinePage /> },
     { path: "/", children: <Home /> },

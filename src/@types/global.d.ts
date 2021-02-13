@@ -15,7 +15,11 @@ declare namespace JSX {
 interface ModelViewerJSX {
   src: string;
   alt?: string;
+  "skybox-image"?: string;
   "camera-controls"?: boolean;
+  "animation-name"?: string;
+  "disable-zoom"?: boolean;
+  "camera-orbit"?: string;
   autoplay?: boolean;
   style?: CSSProperties;
 }

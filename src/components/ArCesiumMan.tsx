@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { Button, H5 } from "ui-neumorphism";
 import styled from "styled-components";
 import "@google/model-viewer";
