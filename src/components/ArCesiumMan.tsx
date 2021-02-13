@@ -61,7 +61,7 @@ const ControlArea = styled.div`
   position: absolute;
   top: 20px;
   right: 20px;
-  z-index: 9999;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;

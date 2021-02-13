@@ -51,7 +51,7 @@ const ButtonWrapper = styled.div`
   margin-left: 12px;
   top: 20px;
   right: 20px;
-  z-index: 9999;
+  z-index: 1;
 `;
 
 export default ArFox;
