@@ -1,7 +1,5 @@
-# digital-arts
+# [yahooshiken.com](https://yahooshiken.com)
 
-- Strange Attractor
-  - Henon attractor
-  - Tinkerbell map
-- Fractal
-  - Mandelbrot set
+This webpage is my workspace, playground and portfolio.
+
+🚀 Here: https://yahooshiken.com
