@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { IconButton } from "ui-neumorphism";
-import { Menu } from "react-feather";
+import { Menu, GitHub } from "react-feather";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -24,6 +24,12 @@ const Header: FC<Props> = ({ handleOpen }) => {
           />
         </Link>
       </LogoWrapper>
+      <GitHubLink
+        target="_blank"
+        href="https://github.com/yahooshiken/yahooshiken.com"
+      >
+        <GitHub />
+      </GitHubLink>
     </HeaderWrapper>
   );
 };
@@ -45,6 +51,11 @@ const LogoWrapper = styled.div`
 
 const LogoImage = styled.img`
   height: 100%;
+`;
+
+const GitHubLink = styled.a`
+  margin-left: auto;
+  padding: 0 16px;
 `;
 
 export default Header;
