@@ -83,6 +83,7 @@ const SERVICE_NAME = {
   Note: "Note",
   Twitter: "Twitter",
   Hatena: "Hatena",
+  Zenn: "Zenn,",
 } as const;
 
 type ServiceName = keyof typeof SERVICE_NAME;
@@ -159,6 +160,7 @@ const TimelinePage: FC = () => {
     Note: true,
     Twitter: true,
     Hatena: true,
+    Zenn: true,
   });
 
   const [loading, setLoading] = useState(false);
@@ -166,6 +168,7 @@ const TimelinePage: FC = () => {
   const [qiitaArticles, setQiitaArticles] = useState<Article[]>([]);
   const [noteArticles, setNoteArticles] = useState<Article[]>([]);
   const [hatenaArticles, setHatenaArticles] = useState<Article[]>([]);
+  const [zennArticles, setZennArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     const fetchQiitaArticles = async () => {
@@ -210,6 +213,20 @@ const TimelinePage: FC = () => {
       }
     };
 
+    const fetchZennArticles = async () => {
+      setLoading(true);
+      try {
+        const result = await httpClient.get<ArticleResponse>(
+          "/v1/activities/zenn"
+        );
+        setZennArticles(result.data.articles);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchQiitaArticles().catch((e) => {
       console.error(e);
     });
@@ -219,6 +236,9 @@ const TimelinePage: FC = () => {
     fetchHatenaArticles().catch((e) => {
       console.error(e);
     });
+    fetchZennArticles().catch((e) => {
+      console.error(e);
+    });
   }, []);
 
   useEffect(() => {
@@ -226,12 +246,13 @@ const TimelinePage: FC = () => {
       ...(show.Qiita ? qiitaArticles : []),
       ...(show.Note ? noteArticles : []),
       ...(show.Hatena ? hatenaArticles : []),
+      ...(show.Zenn ? zennArticles : []),
     ];
     items.sort((a, b) =>
       moment(a.created_at).isBefore(b.created_at) ? 1 : -1
     );
     setEvents(items);
-  }, [show, qiitaArticles, noteArticles, hatenaArticles]);
+  }, [show, qiitaArticles, noteArticles, hatenaArticles, zennArticles]);
 
   const handleShow = (show: ShowState, serviceName: ServiceName) => {
     setShow({ ...show, [serviceName]: !show[serviceName] });
@@ -245,6 +266,12 @@ const TimelinePage: FC = () => {
           checked={show.Note}
           color="var(--success)"
           onChange={() => handleShow(show, "Note")}
+        />
+        <Checkbox
+          label="Zenn"
+          checked={show.Zenn}
+          color="var(--success)"
+          onChange={() => handleShow(show, "Zenn")}
         />
         <Checkbox
           label="Qiita"
