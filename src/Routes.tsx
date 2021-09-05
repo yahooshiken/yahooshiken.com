@@ -5,11 +5,12 @@ import P5Canvas from "./components/P5Canvas";
 
 import Home from "./components/Home";
 import Sidebar from "./components/Sidebar";
+
 import Circle from "./sketches/Circle";
 import WaveClock from "./sketches/WaveClock";
 import Circles from "./sketches/Circles";
-import AboutPage from "./pages/AboutPage";
-import TimelinePage from "./pages/TimelinePage";
+import { AboutPage, PlaylistPage, TimelinePage } from "./pages";
+
 import BoxCanvas from "./components/BoxCanvas";
 import ArCesiumMan from "./components/ArCesiumMan";
 import ArFox from "./components/ArFox";
@@ -24,6 +25,7 @@ const Routes: FC = () => {
     { path: "/ar_showcase/cesium_man", children: <ArCesiumMan /> },
     { path: "/ar_showcase/fox", children: <ArFox /> },
     { path: "/about", children: <AboutPage /> },
+    { path: "/playlists", children: <PlaylistPage/> },
     { path: "/timeline", children: <TimelinePage /> },
     { path: "/", children: <Home /> },
   ];

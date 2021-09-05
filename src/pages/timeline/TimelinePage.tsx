@@ -17,7 +17,7 @@ import {
   Subtitle1,
 } from "ui-neumorphism";
 
-import httpClient from "../httpClient";
+import httpClient from "../../httpClient";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -303,7 +303,7 @@ const Timeline: FC<{ loading: boolean; events: Article[] }> = ({
   useEffect(() => {
     const lazyLoadJson = async () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const data = await import("../lotties/koala.json");
+      const data = await import("../../lotties/koala.json");
       setAnimationData(data);
     };
 

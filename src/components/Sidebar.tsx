@@ -75,6 +75,7 @@ const Sidebar: FC = ({ children }) => {
     { path: "/", title: "Home" },
     { path: "/about", title: "About" },
     { path: "/timeline", title: "Timeline" },
+    { path: "/playlists", title: "Playlists" },
     {
       path: "/p5_gallery",
       title: "p5.js Gallery",
