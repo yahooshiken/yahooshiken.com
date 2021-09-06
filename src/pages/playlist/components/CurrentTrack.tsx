@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 import {
   Shuffle,
@@ -11,11 +11,17 @@ import {
   Monitor,
   Heart,
 } from "react-feather";
+import { Track } from "../hooks/useTracks";
 
-const CurrentTrack: FC = () => {
+interface Props {
+  selectedTrack: Track | undefined;
+  setSelectedTrack: Dispatch<SetStateAction<Track | undefined>>;
+}
+
+const CurrentTrack: FC<Props> = ({ selectedTrack, setSelectedTrack }) => {
   return (
     <Wrapper>
-      <TrackInfo />
+      <TrackInfo selectedTrack={selectedTrack} />
       <PlayerControlls />
       <MoreControlls />
     </Wrapper>
@@ -31,13 +37,23 @@ const Wrapper = styled.div`
   height: 5rem;
 `;
 
-const TrackInfo: FC = () => {
+const TrackInfo: FC<{ selectedTrack: Track | undefined }> = ({
+  selectedTrack: track,
+}) => {
   return (
     <TrackInfoWrapper>
-      <AlbumImage src="https://www.shiritsuebichu.jp/official/pc/img/n_index/main_sp.jpg" />
+      <AlbumImage
+        src={
+          track?.album?.images?.reduce((prev, curr) =>
+            prev.width < curr.width ? prev : curr
+          )?.url
+        }
+      />
       <div>
-        <TrackTitle>イヤフォンライオット</TrackTitle>
-        <TrackArtist>私立恵比寿中学</TrackArtist>
+        <TrackTitle>{track?.name}</TrackTitle>
+        <TrackArtist>
+          {track?.artists?.map((a) => a.name).join(", ")}
+        </TrackArtist>
       </div>
       <IconWrapper>
         <Heart size={20} />

@@ -1,51 +1,91 @@
-import React, { FC } from "react";
-import styled from "styled-components";
-import { Clock } from "react-feather";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import styled, { css } from "styled-components";
+import { Clock, Play } from "react-feather";
+import { Track } from "../hooks/useTracks";
 
-const tracks = [
-  { id: 1, title: "愛のレンタル", album: "MUSIC", duration: "3:00" },
-  { id: 2, title: "SHAKE! SHAKE!", album: "MUSIC", duration: "4:00" },
-  { id: 3, title: "愛のレンタル", album: "MUSIC", duration: "3:00" },
-  { id: 4, title: "SHAKE! SHAKE!", album: "MUSIC", duration: "4:00" },
-  { id: 5, title: "愛のレンタル", album: "MUSIC", duration: "3:00" },
-  { id: 6, title: "SHAKE! SHAKE!", album: "MUSIC", duration: "4:00" },
-  { id: 7, title: "愛のレンタル", album: "MUSIC", duration: "3:00" },
-  { id: 8, title: "SHAKE! SHAKE!", album: "MUSIC", duration: "4:00" },
-  { id: 9, title: "愛のレンタル", album: "MUSIC", duration: "3:00" },
-  { id: 10, title: "SHAKE! SHAKE!", album: "MUSIC", duration: "4:00" },
-  { id: 11, title: "愛のレンタル", album: "MUSIC", duration: "3:00" },
-  { id: 12, title: "SHAKE! SHAKE!", album: "MUSIC", duration: "4:00" },
-];
+interface Props {
+  tracks: Track[];
+  selectedTrack: Track | undefined;
+  setSelectedTrack: Dispatch<SetStateAction<Track | undefined>>;
+}
 
-const TracksTable: FC = () => {
+const TracksTable: FC<Props> = ({
+  tracks,
+  selectedTrack,
+  setSelectedTrack,
+}) => {
   return (
     <Table>
       <THead>
-        <TRow>
+        <tr>
           <th>#</th>
           <th>TITLE</th>
           <th>ALBUM</th>
           <th>
             <Clock size={24} />
           </th>
-        </TRow>
+        </tr>
       </THead>
       <TBody>
-        {tracks.map((t) => (
-          <TRow>
-            <td>{t.id}</td>
-            <td>{t.title}</td>
-            <td>{t.album}</td>
-            <td>{t.duration}</td>
-          </TRow>
+        {tracks.map((t, index) => (
+          <TRow
+            key={t.id}
+            track={t}
+            index={index + 1}
+            selected={t.id === selectedTrack?.id}
+            setSelectedTrack={setSelectedTrack}
+          />
         ))}
       </TBody>
     </Table>
   );
 };
 
+const TRow: FC<{
+  track: Track | undefined;
+  index: number;
+  selected: boolean;
+  setSelectedTrack: Dispatch<SetStateAction<Track | undefined>>;
+}> = (props) => {
+  const { track, index, selected, setSelectedTrack } = props;
+
+  const [hover, setHover] = useState(false);
+  const handleClick = (track: Track | undefined) => setSelectedTrack(track);
+  const handleMouseOver = () => setHover(true);
+  const handleMouseOut = () => setHover(false);
+
+  return (
+    <TRowWrapper
+      selected={selected}
+      onClick={() => handleClick(track)}
+      onMouseEnter={handleMouseOver}
+      onMouseLeave={handleMouseOut}
+    >
+      <td style={{ width: 32 }}>
+        {hover && !!track?.preview_url ? <Play /> : index}
+      </td>
+      <TD>
+        <AlbumImage
+          src={
+            track?.album?.images?.reduce((p, c) => (p.width < c.width ? p : c))
+              .url
+          }
+          alt=""
+        />
+        <div>
+          <Title>{track?.name}</Title>
+          <Artist>{track?.artists?.map((a) => a.name).join(", ")}</Artist>
+        </div>
+      </TD>
+      <td>{track?.album?.name}</td>
+      <td>{track?.duration_ms}</td>
+    </TRowWrapper>
+  );
+};
+
 const Table = styled.table`
   width: 100%;
+  border: none;
 `;
 
 const THead = styled.thead`
@@ -57,8 +97,42 @@ const TBody = styled.tbody`
   color: white;
 `;
 
-const TRow = styled.tr`
+const AlbumImage = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.5rem;
+`;
+
+const TD = styled.td`
+  display: flex;
+  overflow: hidden;
+  padding: 0.625rem 1rem 0.625rem 0;
+  white-space: nowrap;
+`;
+
+const Title = styled.p`
+  font-size: 1rem;
+`;
+const Artist = styled.p`
+  font-size: 0.875rem;
+  color: #a3a3a3;
+`;
+
+const TRowWrapper = styled.tr<{ selected?: boolean }>`
   height: 3.75rem;
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  ${({ selected }) =>
+    selected
+      ? css`
+          font-weight: bold;
+          background: rgba(255, 255, 255, 0.3);
+          &:hover {
+            background: rgba(255, 255, 255, 0.3);
+          }
+        `
+      : null};
 `;
 
 export default TracksTable;

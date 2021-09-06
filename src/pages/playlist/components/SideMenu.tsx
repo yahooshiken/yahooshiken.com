@@ -1,59 +1,18 @@
-import React, { FC } from "react";
-import styled from "styled-components";
+import React, { Dispatch, FC, SetStateAction } from "react";
+import styled, { css } from "styled-components";
 import { Icon as IconType, Home, Search, Layers } from "react-feather";
 
-const playlists = [
-  "First: Today's Top Hits",
-  "Discover Weekly",
-  "Release Radar",
-  "Chill",
-  "Background",
-  "lofi hip hop music - beats to relax/study to",
-  "Vibes Right Now",
-  "Time Capsule",
-  "On Repeat",
-  "Summer Rewind",
-  "Dank Doggo Tunes",
-  "Sleepy Doge",
-  "Today's Top Hits",
-  "Discover Weekly",
-  "Release Radar",
-  "Chill",
-  "Background",
-  "lofi hip hop music - beats to relax/study to",
-  "Vibes Right Now",
-  "Time Capsule",
-  "On Repeat",
-  "Summer Rewind",
-  "Dank Doggo Tunes",
-  "Sleepy Doge",
-  "Today's Top Hits",
-  "Discover Weekly",
-  "Release Radar",
-  "Chill",
-  "Background",
-  "lofi hip hop music - beats to relax/study to",
-  "Vibes Right Now",
-  "Time Capsule",
-  "On Repeat",
-  "Summer Rewind",
-  "Dank Doggo Tunes",
-  "Sleepy Doge",
-  "Today's Top Hits",
-  "Discover Weekly",
-  "Release Radar",
-  "Chill",
-  "Background",
-  "lofi hip hop music - beats to relax/study to",
-  "Vibes Right Now",
-  "Time Capsule",
-  "On Repeat",
-  "Summer Rewind",
-  "Dank Doggo Tunes",
-  "Last:Sleepy Doge",
-];
+import { Playlist } from "../hooks/usePlaylist";
 
-const SideMenu: FC = () => {
+type Props = {
+  playlists: Playlist[];
+  selectedPlaylist: Playlist;
+  setSelectedPlaylist: Dispatch<SetStateAction<Playlist>>;
+};
+
+const SideMenu: FC<Props> = (props) => {
+  const { playlists = [], selectedPlaylist, setSelectedPlaylist } = props;
+
   const myLibrary = [
     "Made For You",
     "Recently Played",
@@ -80,14 +39,18 @@ const SideMenu: FC = () => {
         <Heading4>PLAYLISTS</Heading4>
 
         {playlists.map((playlist) => (
-          <PlaylistItem key={playlist}>{playlist}</PlaylistItem>
+          <PlaylistItem
+            key={playlist.id}
+            selected={selectedPlaylist?.id == playlist.id}
+            onClick={() => setSelectedPlaylist(playlist)}
+          >
+            {playlist.name}
+          </PlaylistItem>
         ))}
       </div>
     </Wrapper>
   );
 };
-
-const C = styled.div``;
 
 const Wrapper = styled.div`
   display: flex;
@@ -105,9 +68,15 @@ const Heading4 = styled.h4`
   letter-spacing: 0.2rem;
 `;
 
-const PlaylistItem = styled.li`
+const PlaylistItem = styled.li<{ selected?: boolean }>`
   padding: 0.5rem 0;
   list-style: none;
+  ${({ selected }) =>
+    selected
+      ? css`
+          font-weight: bold;
+        `
+      : null}
 `;
 
 const SideMenuIconTab: FC<{ icon: IconType; title: string }> = ({

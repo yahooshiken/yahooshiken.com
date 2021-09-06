@@ -2,28 +2,26 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { Play, MoreHorizontal } from "react-feather";
 
-const playlist = {
-  imageUrl: "https://www.shiritsuebichu.jp/official/pc/img/n_index/main_sp.jpg",
-  name: "エビ中ってなんか説明しづらいけど見とかなきゃ損なグループなんだって！",
-  description:
-    "エビ中ってなんか説明しづらいけど見とかなきゃ損なグループなんだって！",
-  creator: "yahooshiken",
-  songs: [1, 2, 3],
-  duration: "0:00",
-};
+import { Playlist } from "../hooks/usePlaylist";
 
-const PlaylistHeader: FC = () => {
-  const { imageUrl, name, description, creator, songs, duration } = playlist;
+interface Props {
+  selectedPlaylist: Playlist;
+}
+
+const PlaylistHeader: FC<Props> = ({ selectedPlaylist }) => {
+  const { images = [], name = "", description = "", tracks } = selectedPlaylist;
+  const image = images?.[0];
+
   return (
     <Wrapper>
       <PlaylistInfoWrapper>
-        <CoverImage src={imageUrl} />
+        <CoverImage src={image?.url} />
         <PlaylistInfo>
           <Headline>PLAYLIST</Headline>
           <PlaylistName>{name}</PlaylistName>
           <PlaylistDescription>{description}</PlaylistDescription>
           <PlaylistDescription>
-            Created by {creator} * {songs.length} songs, {duration}
+            Created by yahooshiken * {tracks.total} songs
           </PlaylistDescription>
         </PlaylistInfo>
       </PlaylistInfoWrapper>

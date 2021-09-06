@@ -1,16 +1,42 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { SideMenu, CurrentTrack, PlaylistScreen } from "./components";
+import usePlaylist, { initialPlaylist, Playlist } from "./hooks/usePlaylist";
+import useTrack, { Track } from "./hooks/useTracks";
 
 const PlaylistPage: FC = () => {
+  const [selectedPlaylist, setSelectedPlaylist] =
+    useState<Playlist>(initialPlaylist);
+  const [selectedTrack, setSelectedTrack] = useState<Track | undefined>();
+  const { playlists } = usePlaylist();
+  const { tracks } = useTrack(selectedPlaylist.id);
+
+  useEffect(() => {
+    if (playlists?.length > 0) {
+      setSelectedPlaylist(playlists?.[0] || initialPlaylist);
+    }
+  }, [playlists]);
+
   return (
     <PageWrapper>
       <Flex>
-        <SideMenu />
-        <PlaylistScreen />
+        <SideMenu
+          playlists={playlists}
+          selectedPlaylist={selectedPlaylist}
+          setSelectedPlaylist={setSelectedPlaylist}
+        />
+        <PlaylistScreen
+          tracks={tracks}
+          selectedPlaylist={selectedPlaylist}
+          selectedTrack={selectedTrack}
+          setSelectedTrack={setSelectedTrack}
+        />
       </Flex>
-      <CurrentTrack />
+      <CurrentTrack
+        selectedTrack={selectedTrack}
+        setSelectedTrack={setSelectedTrack}
+      />
     </PageWrapper>
   );
 };

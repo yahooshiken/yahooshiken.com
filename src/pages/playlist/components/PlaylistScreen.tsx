@@ -1,12 +1,27 @@
-import React, { FC } from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import styled from "styled-components";
 
 import { ChevronLeft, ChevronRight, User, ChevronDown } from "react-feather";
 
+import { Playlist } from "../hooks/usePlaylist";
+import { Track } from "../hooks/useTracks";
+
 import PlaylistHeader from "./PlaylistHeader";
 import TracksTable from "./TracksTable";
 
-const PlaylistScreen: FC = () => {
+interface Props {
+  selectedPlaylist: Playlist;
+  tracks: Track[];
+  selectedTrack: Track | undefined;
+  setSelectedTrack: Dispatch<SetStateAction<Track | undefined>>;
+}
+
+const PlaylistScreen: FC<Props> = ({
+  selectedPlaylist,
+  tracks,
+  selectedTrack,
+  setSelectedTrack,
+}) => {
   return (
     <Wrapper>
       <Header>
@@ -24,8 +39,12 @@ const PlaylistScreen: FC = () => {
           <ChevronDown size={24} style={{ verticalAlign: "middle" }} />
         </AccountInfo>
       </Header>
-      <PlaylistHeader />
-      <TracksTable />
+      <PlaylistHeader selectedPlaylist={selectedPlaylist} />
+      <TracksTable
+        tracks={tracks}
+        selectedTrack={selectedTrack}
+        setSelectedTrack={setSelectedTrack}
+      />
     </Wrapper>
   );
 };
