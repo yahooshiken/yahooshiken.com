@@ -1,10 +1,11 @@
-import React, { Dispatch, FC, SetStateAction } from "react";
+import React, { Dispatch, FC, SetStateAction, useContext } from "react";
 import styled from "styled-components";
 import {
   Shuffle,
   SkipBack,
   SkipForward,
   PlayCircle,
+  Pause,
   Repeat,
   Maximize,
   Volume2,
@@ -12,6 +13,7 @@ import {
   Heart,
 } from "react-feather";
 import { Track } from "../hooks/useTracks";
+import { audioContext } from "../hooks/useAudio";
 
 interface Props {
   selectedTrack: Track | undefined;
@@ -22,7 +24,7 @@ const CurrentTrack: FC<Props> = ({ selectedTrack, setSelectedTrack }) => {
   return (
     <Wrapper>
       <TrackInfo selectedTrack={selectedTrack} />
-      <PlayerControlls />
+      <PlayerControlls url={selectedTrack?.preview_url} />
       <MoreControlls />
     </Wrapper>
   );
@@ -81,7 +83,13 @@ const TrackArtist = styled.p`
   color: rgba(255, 255, 255, 0.7);
 `;
 
-const PlayerControlls: FC = () => {
+const PlayerControlls: FC<{ url: string | undefined }> = ({ url }) => {
+  const {
+    play = () => null,
+    pause = () => null,
+    playing,
+  } = useContext(audioContext);
+
   return (
     <PlayerControllsWrapper>
       <Controlls>
@@ -92,7 +100,11 @@ const PlayerControlls: FC = () => {
           <SkipBack />
         </IconWrapper>
         <IconWrapper>
-          <PlayCircle />
+          {playing ? (
+            <Pause onClick={() => pause()} />
+          ) : (
+            <PlayCircle onClick={() => play(url)} />
+          )}
         </IconWrapper>
         <IconWrapper>
           <SkipForward />

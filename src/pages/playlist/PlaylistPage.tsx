@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { SideMenu, CurrentTrack, PlaylistScreen } from "./components";
+import useAudio, { audioContext } from "./hooks/useAudio";
 import usePlaylist, { initialPlaylist, Playlist } from "./hooks/usePlaylist";
 import useTrack, { Track } from "./hooks/useTracks";
 
@@ -12,6 +13,9 @@ const PlaylistPage: FC = () => {
   const { playlists } = usePlaylist();
   const { tracks } = useTrack(selectedPlaylist.id);
 
+  const { Provider } = audioContext;
+  const { audio, play, pause, playing } = useAudio();
+
   useEffect(() => {
     if (playlists?.length > 0) {
       setSelectedPlaylist(playlists?.[0] || initialPlaylist);
@@ -19,25 +23,27 @@ const PlaylistPage: FC = () => {
   }, [playlists]);
 
   return (
-    <PageWrapper>
-      <Flex>
-        <SideMenu
-          playlists={playlists}
-          selectedPlaylist={selectedPlaylist}
-          setSelectedPlaylist={setSelectedPlaylist}
-        />
-        <PlaylistScreen
-          tracks={tracks}
-          selectedPlaylist={selectedPlaylist}
+    <Provider value={{ audio, play, pause, playing }}>
+      <PageWrapper>
+        <Flex>
+          <SideMenu
+            playlists={playlists}
+            selectedPlaylist={selectedPlaylist}
+            setSelectedPlaylist={setSelectedPlaylist}
+          />
+          <PlaylistScreen
+            tracks={tracks}
+            selectedPlaylist={selectedPlaylist}
+            selectedTrack={selectedTrack}
+            setSelectedTrack={setSelectedTrack}
+          />
+        </Flex>
+        <CurrentTrack
           selectedTrack={selectedTrack}
           setSelectedTrack={setSelectedTrack}
         />
-      </Flex>
-      <CurrentTrack
-        selectedTrack={selectedTrack}
-        setSelectedTrack={setSelectedTrack}
-      />
-    </PageWrapper>
+      </PageWrapper>
+    </Provider>
   );
 };
 

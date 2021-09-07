@@ -1,7 +1,14 @@
-import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useState,
+  useContext,
+} from "react";
 import styled, { css } from "styled-components";
-import { Clock, Play } from "react-feather";
+import { Clock, Pause, Play, BarChart2 } from "react-feather";
 import { Track } from "../hooks/useTracks";
+import { audioContext } from "../hooks/useAudio";
 
 interface Props {
   tracks: Track[];
@@ -41,6 +48,21 @@ const TracksTable: FC<Props> = ({
   );
 };
 
+const PlayControl: FC<{ url: string }> = ({ url }) => {
+  const {
+    audio,
+    play = () => null,
+    pause = () => null,
+    playing,
+  } = useContext(audioContext);
+
+  if (playing && url === audio?.getAttribute("src")) {
+    return <Pause onClick={() => pause()} />;
+  }
+
+  return <Play onClick={() => play(url)} />;
+};
+
 const TRow: FC<{
   track: Track | undefined;
   index: number;
@@ -54,15 +76,26 @@ const TRow: FC<{
   const handleMouseOver = () => setHover(true);
   const handleMouseOut = () => setHover(false);
 
+  const { audio, playing } = useContext(audioContext);
+  const playingThisAudio =
+    playing && track?.preview_url === audio?.getAttribute("src");
+
   return (
     <TRowWrapper
       selected={selected}
+      playingThisAudio={playingThisAudio}
       onClick={() => handleClick(track)}
       onMouseEnter={handleMouseOver}
       onMouseLeave={handleMouseOut}
     >
-      <td style={{ width: 32 }}>
-        {hover && !!track?.preview_url ? <Play /> : index}
+      <td style={{ width: 48 }}>
+        {hover && !!track?.preview_url ? (
+          <PlayControl url={track.preview_url} />
+        ) : playingThisAudio ? (
+          <BarChart2 />
+        ) : (
+          index
+        )}
       </td>
       <TD>
         <AlbumImage
@@ -78,7 +111,7 @@ const TRow: FC<{
         </div>
       </TD>
       <td>{track?.album?.name}</td>
-      <td>{track?.duration_ms}</td>
+      <td>{track?.duration}</td>
     </TRowWrapper>
   );
 };
@@ -118,8 +151,12 @@ const Artist = styled.p`
   color: #a3a3a3;
 `;
 
-const TRowWrapper = styled.tr<{ selected?: boolean }>`
+const TRowWrapper = styled.tr<{
+  selected?: boolean;
+  playingThisAudio?: boolean;
+}>`
   height: 3.75rem;
+  padding: 0 1rem;
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
@@ -128,6 +165,17 @@ const TRowWrapper = styled.tr<{ selected?: boolean }>`
       ? css`
           font-weight: bold;
           background: rgba(255, 255, 255, 0.3);
+          &:hover {
+            background: rgba(255, 255, 255, 0.3);
+          }
+        `
+      : null};
+
+  ${({ playingThisAudio }) =>
+    playingThisAudio
+      ? css`
+          font-weight: bold;
+          color: #1db954;
           &:hover {
             background: rgba(255, 255, 255, 0.3);
           }

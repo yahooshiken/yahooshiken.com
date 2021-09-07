@@ -71,6 +71,11 @@ const Heading4 = styled.h4`
 const PlaylistItem = styled.li<{ selected?: boolean }>`
   padding: 0.5rem 0;
   list-style: none;
+  white-space: nowrap;
+  overflow: hidden;
+  &:hover {
+    font-weight: bold;
+  }
   ${({ selected }) =>
     selected
       ? css`
