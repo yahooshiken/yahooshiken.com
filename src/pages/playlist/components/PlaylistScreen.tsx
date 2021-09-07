@@ -16,14 +16,41 @@ interface Props {
   setSelectedTrack: Dispatch<SetStateAction<Track | undefined>>;
 }
 
+const colors = [
+  "#071ab0",
+  "#af1018",
+  "#21B046",
+  "#B09021",
+  "#198CBD",
+  "#63ac22",
+  "#A210B0",
+] as const;
+
+type Color = typeof colors[number];
+
+const getColor = (val: number): Color => {
+  return colors[val % colors.length];
+};
+
+const hash = (str: string) => {
+  let h = 0;
+  for (const c of str) {
+    h += c.charCodeAt(0);
+  }
+  return h;
+};
+
 const PlaylistScreen: FC<Props> = ({
   selectedPlaylist,
   tracks,
   selectedTrack,
   setSelectedTrack,
 }) => {
+  const { id = "" } = selectedPlaylist;
+  const color = getColor(hash(id));
+
   return (
-    <Wrapper>
+    <Wrapper color={color}>
       <Header>
         <Leading>
           <IconWrapper>
@@ -49,9 +76,9 @@ const PlaylistScreen: FC<Props> = ({
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ color: Color }>`
   position: relative;
-  background: linear-gradient(#af1018, #000000, #000000);
+  background: linear-gradient(${({ color }) => color}, #000000, #000000);
   width: 100%;
   padding: 5rem 1.25rem;
   overflow: auto;
