@@ -24,6 +24,7 @@ export type Track = {
   artists: Artist[];
   disc_number: number;
   duration_ms: number;
+  duration?: string;
   preview_url: string;
 };
 
