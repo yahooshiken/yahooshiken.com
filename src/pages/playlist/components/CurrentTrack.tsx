@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useContext } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   Shuffle,
   SkipBack,
@@ -42,6 +42,9 @@ const Wrapper = styled.div`
 const TrackInfo: FC<{ selectedTrack: Track | undefined }> = ({
   selectedTrack: track,
 }) => {
+  if (!track) {
+    return <TrackInfoWrapper />;
+  }
   return (
     <TrackInfoWrapper>
       <AlbumImage
@@ -51,12 +54,12 @@ const TrackInfo: FC<{ selectedTrack: Track | undefined }> = ({
           )?.url
         }
       />
-      <div>
+      <TrackWrap>
         <TrackTitle>{track?.name}</TrackTitle>
         <TrackArtist>
           {track?.artists?.map((a) => a.name).join(", ")}
         </TrackArtist>
-      </div>
+      </TrackWrap>
       <IconWrapper>
         <Heart size={20} />
       </IconWrapper>
@@ -67,6 +70,8 @@ const TrackInfo: FC<{ selectedTrack: Track | undefined }> = ({
 const TrackInfoWrapper = styled.div`
   display: flex;
   align-items: center;
+  min-width: 12.5rem;
+  max-width: 28rem;
   padding: 0.5rem;
 `;
 
@@ -74,6 +79,12 @@ const AlbumImage = styled.img`
   width: 3.75rem;
   height: 3.75rem;
   margin-right: 0.5rem;
+`;
+
+const TrackWrap = styled.div`
+  padding: 0 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const TrackTitle = styled.p`
@@ -99,7 +110,7 @@ const PlayerControlls: FC<{ url: string | undefined }> = ({ url }) => {
         <IconWrapper>
           <SkipBack />
         </IconWrapper>
-        <IconWrapper>
+        <IconWrapper active={!!url}>
           {playing ? (
             <Pause onClick={() => pause()} />
           ) : (
@@ -130,11 +141,25 @@ const PlayerControllsWrapper = styled.div`
 `;
 const Controlls = styled.div`
   display: flex;
+  align-items: center;
+  height: 3.5rem;
   padding: 0.5rem;
 `;
-const IconWrapper = styled.span`
+const IconWrapper = styled.span<{ active?: boolean }>`
   color: #ffffff;
   padding: 0 0.75rem;
+
+  ${({ active }) =>
+    active
+      ? css`
+          &:hover {
+            svg {
+              width: 32px;
+              height: 32px;
+            }
+          }
+        `
+      : null};
 `;
 
 const ProgressWrapper = styled.div`

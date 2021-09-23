@@ -37,9 +37,9 @@ const SideMenu: FC<Props> = (props) => {
       </div>
       <div>
         <Heading4>PLAYLISTS</Heading4>
-
         {playlists.map((playlist) => (
           <PlaylistItem
+            active
             key={playlist.id}
             selected={selectedPlaylist?.id == playlist.id}
             onClick={() => setSelectedPlaylist(playlist)}
@@ -68,14 +68,19 @@ const Heading4 = styled.h4`
   letter-spacing: 0.2rem;
 `;
 
-const PlaylistItem = styled.li<{ selected?: boolean }>`
+const PlaylistItem = styled.li<{ selected?: boolean, active?: boolean }>`
   padding: 0.5rem 0;
   list-style: none;
   white-space: nowrap;
   overflow: hidden;
-  &:hover {
-    font-weight: bold;
-  }
+  ${({ active }) =>
+    active
+      ? css`
+          &:hover {
+            font-weight: bold;
+          }
+        `
+      : null}
   ${({ selected }) =>
     selected
       ? css`

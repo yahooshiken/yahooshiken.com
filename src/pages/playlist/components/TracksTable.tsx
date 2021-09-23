@@ -119,6 +119,7 @@ const TRow: FC<{
 const Table = styled.table`
   width: 100%;
   border: none;
+  border-spacing: unset;
 `;
 
 const THead = styled.thead`

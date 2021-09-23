@@ -50,12 +50,13 @@ const PlaylistPage: FC = () => {
 const PageWrapper = styled.div`
   display: grid;
   grid-template-rows: auto 80px;
-  max-height: calc(100vh - 3.75rem);
+  max-height: calc(100vh - 4.25rem);
+  min-height: calc(100vh - 4.25rem);
 `;
 
 const Flex = styled.div`
   display: flex;
-  max-height: calc(100vh - 3.75rem - 5rem);
+  max-height: calc(100vh - 4.25rem - 5rem);
   background: #000000;
 `;
 
