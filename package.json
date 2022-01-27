@@ -34,7 +34,7 @@
     "react-sidebar": "^3.0.2",
     "react-three-fiber": "^5.3.18",
     "styled-components": "^5.2.1",
-    "three": "^0.125.2",
+    "three": "^0.137.0",
     "ui-neumorphism": "^1.1.0"
   },
   "devDependencies": {
