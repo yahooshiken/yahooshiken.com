@@ -1,10 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
-import styled from "styled-components";
 import Lottie, { Options } from "react-lottie";
+import styled from "styled-components";
+import httpClient from "../httpClient";
 
 const Home: FC = () => {
   const [animationData, setAnimationData] = useState<any>(undefined);
   const lottieOptions: Options = { animationData };
+
+  useEffect(() => {
+    // サーバーを起こすためのダミーのリクエスト
+    httpClient.get("/v1/wake").then(console.info).catch(console.error);
+  }, []);
 
   useEffect(() => {
     const lazyLoadJson = async () => {
