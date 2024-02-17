@@ -83,7 +83,8 @@ const SERVICE_NAME = {
   Note: "Note",
   Twitter: "Twitter",
   Hatena: "Hatena",
-  Zenn: "Zenn,",
+  Zenn: "Zenn",
+  Sizu: "Sizu",
 } as const;
 
 type ServiceName = keyof typeof SERVICE_NAME;
@@ -101,6 +102,7 @@ interface User {
 }
 
 interface Article {
+  service_name: ServiceName;
   id: number;
   url: string;
   title: string;
@@ -137,7 +139,18 @@ const Article = (article: Article) => (
             />
           }
         />
-        <CardMedia dark src={article.image_url} />
+        <CardMedia
+          dark
+          src={article.image_url}
+          style={
+            article.service_name === "Sizu"
+              ? {
+                  backgroundSize: "contain",
+                  backgroundColor: "white",
+                }
+              : {}
+          }
+        />
         <CardContent>
           <Body>{article.body}</Body>
         </CardContent>
@@ -161,6 +174,7 @@ const TimelinePage: FC = () => {
     Twitter: true,
     Hatena: true,
     Zenn: true,
+    Sizu: true,
   });
 
   const [loading, setLoading] = useState(false);
@@ -169,6 +183,7 @@ const TimelinePage: FC = () => {
   const [noteArticles, setNoteArticles] = useState<Article[]>([]);
   const [hatenaArticles, setHatenaArticles] = useState<Article[]>([]);
   const [zennArticles, setZennArticles] = useState<Article[]>([]);
+  const [sizuArticles, setSizuArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     const fetchQiitaArticles = async () => {
@@ -227,6 +242,20 @@ const TimelinePage: FC = () => {
       }
     };
 
+    const fetchSizuArticles = async () => {
+      setLoading(true);
+      try {
+        const result = await httpClient.get<ArticleResponse>(
+          "/v1/activities/sizu"
+        );
+        setSizuArticles(result.data.articles);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchQiitaArticles().catch((e) => {
       console.error(e);
     });
@@ -239,6 +268,9 @@ const TimelinePage: FC = () => {
     fetchZennArticles().catch((e) => {
       console.error(e);
     });
+    fetchSizuArticles().catch((e) => {
+      console.error(e);
+    });
   }, []);
 
   useEffect(() => {
@@ -247,12 +279,20 @@ const TimelinePage: FC = () => {
       ...(show.Note ? noteArticles : []),
       ...(show.Hatena ? hatenaArticles : []),
       ...(show.Zenn ? zennArticles : []),
+      ...(show.Sizu ? sizuArticles : []),
     ];
     items.sort((a, b) =>
       moment(a.created_at).isBefore(b.created_at) ? 1 : -1
     );
     setEvents(items);
-  }, [show, qiitaArticles, noteArticles, hatenaArticles, zennArticles]);
+  }, [
+    show,
+    qiitaArticles,
+    noteArticles,
+    hatenaArticles,
+    zennArticles,
+    sizuArticles,
+  ]);
 
   const handleShow = (show: ShowState, serviceName: ServiceName) => {
     setShow({ ...show, [serviceName]: !show[serviceName] });
@@ -284,6 +324,12 @@ const TimelinePage: FC = () => {
           checked={show.Hatena}
           color="var(--success)"
           onChange={() => handleShow(show, "Hatena")}
+        />
+        <Checkbox
+          label="しずかなインターネット"
+          checked={show.Sizu}
+          color="var(--success)"
+          onChange={() => handleShow(show, "Sizu")}
         />
       </Aside>
       <TimelineWrapper>
